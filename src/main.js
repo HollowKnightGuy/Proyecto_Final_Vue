@@ -6,6 +6,7 @@ import Programacion from "@/components/Programacion.vue";
 import Ofimatica from "@/components/Ofimatica.vue";
 import SOs from "@/components/SOs.vue";
 import Login from "@/components/Login.vue";
+import registro from "@/components/registro.vue";
 import Private from "@/components/Private.vue";
 
 import { createRouter, createWebHistory } from 'vue-router';
@@ -20,6 +21,10 @@ const routes = [
 {
     path: '/', 
     component: Inicio
+},
+{
+    path: '/registro', 
+    component: registro
 },
 {
     path: '/programacion',

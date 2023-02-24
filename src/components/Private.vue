@@ -17,15 +17,6 @@ let username = ref("");
         } 
     });
 
-    function closeSession(){
-            signOut(auth).then(() => {
-                username = "";
-            // Sign-out successful.
-            }).catch((error) => {
-            // An error happened.
-            });
-    }
-
     let file = ref ("");
     
     function uploadFile(){
@@ -42,6 +33,5 @@ let username = ref("");
 <template>
     <h1>Private Zone</h1>
     <h2>Hello {{ username }}</h2>
-    <button @click="closeSession">Close Session</button>
     <p><input type="file" name="file" id="file" ref="file" @change="uploadFile"></p>
 </template>

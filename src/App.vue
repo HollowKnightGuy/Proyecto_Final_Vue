@@ -1,27 +1,41 @@
 <script setup>
-import { createRouter, createWebHistory } from 'vue-router';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
+import { ref } from 'vue';
+import { signOut } from "firebase/auth";
 
+let username=ref("");
 
-onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      const uid = user.uid;
-    } 
-});
+        const uid = user.uid;
+        username.value=user.email;
+    }
+    });
+
+
+    function cerrarSesion(){
+        signOut(auth).then(() => {
+            username='';
+            location.reload();
+        }).catch((error) => {
+        // An error happened.
+        });
+    }
+
 </script>
 
 <template>
     <header>
       <nav>
-        <router-link to="/">INICIO</router-link> |
-        <router-link to="/ofimatica">Ofimática</router-link> |
-        <router-link to="/programacion">Programación</router-link> |
-        <router-link to="/sos">SOs</router-link> |
-        <router-link to="/login">Login</router-link> |
-        <router-link v-if="username != ''" to="/private">Administracion</router-link>
+        <router-link to="/">INICIO</router-link> 
+        <router-link to="/ofimatica">Ofimática</router-link> 
+        <router-link to="/programacion">Programación</router-link> 
+        <router-link to="/sos">SOs</router-link> 
+        <router-link v-if="username == ''" to="/login">Iniciar sesion</router-link> 
+        <router-link v-if="username != ''" to="/private">Administracion</router-link> 
+        <router-link v-if="username == ''" to="/registro">Registro</router-link> 
+        <button @click="cerrarSesion" v-if="username!=''" to="/">Cerrar sesion</button>
       </nav>
     </header>
 
