@@ -1,10 +1,16 @@
 <script setup>
 import { onAuthStateChanged } from "firebase/auth";
-import { signOut } from "firebase/auth";
 import { auth } from "@/firebase";
 import { ref } from "vue";
-import { getStorage, ref as refStrg, uploadBytes } from "firebase/storage";
+import { collection } from "firebase/firestore";
+import { useFirestore, useCollection } from 'vuefire';
+import Ofimatica from '../components/Ofimatica.vue';
+import Programacion from '../components/Programacion.vue';
+import SOs from '../components/SOs.vue';
 
+
+const db = useFirestore()
+const cursos = useCollection(collection(db, 'cursos'));
 let username = ref("");
 
     onAuthStateChanged(auth, (user) => {
@@ -17,15 +23,16 @@ let username = ref("");
         } 
     });
 
-    let file = ref ("");
+
+    // let file = ref ("");
     
-    function uploadFile(){
-        const storage = getStorage();
-        const storageRef = refStrg(storage, file.value.files[0].name);
-        uploadBytes(storageRef, file.value.files[0]).then((snapshot) => {
-            console.log('Uploaded a blob file');
-        });
-    }
+    // function uploadFile(){
+    //     const storage = getStorage();
+    //     const storageRef = refStrg(storage, file.value.files[0].name);
+    //     uploadBytes(storageRef, file.value.files[0]).then((snapshot) => {
+    //         console.log('Uploaded a blob file');
+    //     });
+    // }
 
 </script>
 
@@ -33,5 +40,9 @@ let username = ref("");
 <template>
     <h1>Private Zone</h1>
     <h2>Hello {{ username }}</h2>
-    <p><input type="file" name="file" id="file" ref="file" @change="uploadFile"></p>
+
+   <Ofimatica></Ofimatica>
+   <Programacion></Programacion>
+   <SOs></SOs>
+    <!-- <p><input type="file" name="file" id="file" ref="file" @change="uploadFile"></p> -->
 </template>

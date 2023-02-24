@@ -1,60 +1,37 @@
 <script setup>
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/firebase";
-import { ref } from 'vue';
-import { signOut } from "firebase/auth";
+import pie from './components/pie.vue';
+import cabecera from './components/cabecera.vue';
 
-let username=ref("");
+import { ref, onMounted } from 'vue'
 
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
-        const uid = user.uid;
-        username.value=user.email;
-    }
-    });
+const loading = ref(true)
+
+onMounted(() => {
+  // Aquí obtén los datos
+  // Cuando se hayan obtenido, establece loading en false después de 2 segundos
+  setTimeout(() => {
+    loading.value = false
+  }, 2000)
+})
 
 
-    function cerrarSesion(){
-        signOut(auth).then(() => {
-            username='';
-            location.reload();
-        }).catch((error) => {
-        // An error happened.
-        });
-    }
 
 </script>
 
 <template>
-    <header>
-      <nav>
-        <router-link to="/">INICIO</router-link> 
-        <router-link to="/ofimatica">Ofimática</router-link> 
-        <router-link to="/programacion">Programación</router-link> 
-        <router-link to="/sos">SOs</router-link> 
-        <router-link v-if="username == ''" to="/login">Iniciar sesion</router-link> 
-        <router-link v-if="username != ''" to="/private">Administracion</router-link> 
-        <router-link v-if="username == ''" to="/registro">Registro</router-link> 
-        <button @click="cerrarSesion" v-if="username!=''" to="/">Cerrar sesion</button>
-      </nav>
-    </header>
+   
+  <cabecera></cabecera>
 
   <main>
-    <router-view></router-view>
+    <div v-if="loading" class="contenedor-loader">
+      <div class="loader"></div>
+    </div>
+    <div v-else="loading">
+      <router-view></router-view>
+    </div>
   </main>
 
-  <footer>
-    &copy; Pablo Ortiz Gervilla
-    <p>
-        <a href="#">Politica de privacidad</a>
-    </p>
-    <p>
-      <span>Correo: </span><a href="mailto:pablogervilla123@gmail.com">pablogervilla123@gmail.com</a><br>
-    </p>
-    <p>
-      <span>Telefono: +34 132456798</span>
-    </p>
-</footer>
+  <pie></pie>
 
 </template>
 
@@ -64,8 +41,98 @@ let username=ref("");
     margin: 2rem;
   }
 
+ 
+
   main{
     margin: 5rem;
   }
+
+
+  *{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+img{
+    width: 100%;
+}
+*, *::before, *::after{
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+img{
+  width: 100%;
+}
+
+.contenedor_loader{
+  background-color: #f3f3f3;
+  margin: auto;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  transition: all 1.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader,
+.loader::after,
+.loader:before{
+  margin: auto ;
+  border-radius: 50%;
+}
+
+.loader{
+  color: hsla(160, 100%, 37%, 1);
+  font-size: 11px;
+  position: relative;
+  width: 10em;
+  height: 10em;
+  box-shadow: inset 0 0 0 1em;
+}
+
+.loader::after,
+.loader::before{
+  content: '';
+  position: absolute;
+}
+
+.loader::before{
+  width: 5.2em;
+  height: 10.2em;
+  background-color: #181818;
+  border-radius: 10.2em 0 0 10.2em;
+  top: -0.1em;
+  left: -0.1em;
+  transform-origin: 5.1em 5.1em;
+  animation: girar 1.1s infinite ease-in-out;
+  animation-delay: .8s;
+}
+
+.loader::after{
+  width: 5.2em;
+  height: 10.2em;
+  background-color:#181818;
+  border-radius: 0 10.2em 10.2em 0;
+  top: -0.1em;
+  left: 5em;
+  transform-origin: 0.1em 5.1em;
+  animation: girar 1.1s infinite ease-in-out;
+}
+
+@keyframes girar{
+  0%{
+      transform: rotate(0deg);
+  }
+  100%{
+      transform: rotate(360deg);
+  }
+}
   
 </style>

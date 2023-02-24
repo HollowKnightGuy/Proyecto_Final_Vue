@@ -20,7 +20,7 @@ const cursos = useCollection(collection(db, 'cursos'))
             <tr v-if="curso.categoria == 'ofimatica'">
                 <td>{{ curso.nombre }}</td>
                 <td>{{ curso.horas }}</td>
-                <td><img v-bind:src="'/src/images/'+curso.imagen" width="50" height="50"></td>
+                <td><img v-bind:src="'/src/images/' + curso.imagen" width="50" height="50"></td>
                 <td><button>Incribirse</button></td>
             </tr>
         </tbody>
