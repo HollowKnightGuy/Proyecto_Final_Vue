@@ -40,9 +40,25 @@ function cerrarSesion(){
 </template>
 
 <style>
-
+@import '../assets/base.css';
 header a{
     padding: 2rem;
   }
+
+button{
+    margin: 1rem;
+    padding: 1rem;
+    border: 0;
+    border-radius: 1px;
+    background-color: rgba(84, 84, 84, 0.65);
+    color: hsla(160, 100%, 37%, 1);
+    transition: color 0.5s, background-color 0.5s;
+
+}button:hover{
+    color: black;
+    font-weight: 400;
+    background-color: hsla(160, 100%, 37%, 1);
+    transition: color 0.5s, background-color 0.5s;
+}
 
 </style>

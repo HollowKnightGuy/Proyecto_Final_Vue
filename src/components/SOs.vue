@@ -4,6 +4,7 @@ import { collection} from "firebase/firestore";
 const db = useFirestore()
 const cursos = useCollection(collection(db, 'cursos'))
 
+// TODO: HACER LO DEL INSCRIPCION
 
 
 </script>
