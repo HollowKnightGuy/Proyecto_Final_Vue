@@ -12,6 +12,7 @@ let username = ref(""),
 password = ref("");
 const provider = new GoogleAuthProvider();
 
+
 function registration() {
   createUserWithEmailAndPassword(auth, username.value, password.value)
     .then((userCredential) => {
@@ -31,7 +32,7 @@ function login() {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      router.push("/");
+      router.push("/private");
       // ...
     })
     .catch((error) => {
@@ -50,6 +51,7 @@ function loginGoogle() {
       const user = result.user;
       // IdP data available using getAdditionalUserInfo(result)
       // ...
+      router.push("/private");
     })
     .catch((error) => {
       // Handle Errors here.

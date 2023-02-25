@@ -21,9 +21,9 @@ function genPdf(nombre, horas, img){
 
 <template>
     
-    <h1>Ofimática</h1>
-
-        <div v-for="curso in cursos" :key="curso.nombre">
+    
+    <div v-for="curso in cursos" :key="curso.nombre">
+        <h1 v-if="curso.id == $route.params.id">{{ curso.nombre }}</h1>
             <p v-if="curso.id == $route.params.id">
                 <span>Nombre del curso: {{ curso.nombre }}</span><br><br>
                 <span>Horas del curso: {{ curso.horas }}</span><br><br>

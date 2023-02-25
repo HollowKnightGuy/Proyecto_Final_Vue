@@ -1,14 +1,16 @@
 <script setup>
 import { useFirestore,useCollection } from 'vuefire'
-import { collection} from "firebase/firestore";
+import { collection, doc, deleteDoc} from "firebase/firestore";
 
-import { onAuthStateChanged} from "firebase/auth";
+import {onAuthStateChanged} from "firebase/auth";
 import {ref} from "vue";
 import {auth} from "../firebase.js"
 
+
+const db = useFirestore();
+const cursos = useCollection(collection(db, 'cursos'));
+
 let username=ref("");
-
-
 
 
 onAuthStateChanged(auth, (user) => {
@@ -18,8 +20,9 @@ if (user) {
 }
 });
 
-const db = useFirestore();
-const cursos = useCollection(collection(db, 'cursos'));
+function borrarCurso(id){
+    deleteDoc(doc(db, 'cursos', id));
+}
 
 </script>
 <template>
@@ -29,7 +32,8 @@ const cursos = useCollection(collection(db, 'cursos'));
             <th>Nombre</th>
             <th>Horas</th>
             <th>imagen</th>
-            <th v-if="username!=''">Inscipción</th> 
+            <th v-if="username ==='admin@admin.es'">Inscipción</th> 
+            <th v-if="username ==='admin@admin.es'">Administrar</th> 
         </tr>
         <tbody v-for="curso in cursos" :key="curso.nombre">
             <tr v-if="curso.categoria == 'ofimatica'">
@@ -38,7 +42,8 @@ const cursos = useCollection(collection(db, 'cursos'));
                 </td>
                 <td>{{ curso.horas }}</td>
                 <td><img v-bind:src="'/src/images/' + curso.imagen" width="50" height="50"></td>
-                <td v-if="username !=   ''"><button>Incribirse</button></td>
+                <td v-if="username  ===   'admin@admin.es'"><button>Incribirse</button></td>
+                <td v-if="username  ===   'admin@admin.es'"><button @click='borrarCurso(curso.id)'>Eliminar</button></td>
             </tr>
         </tbody>
     </table>

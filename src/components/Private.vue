@@ -2,10 +2,10 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
 import { ref } from "vue";
-import { collection } from "firebase/firestore";
+import { collection} from "firebase/firestore";
 import { useFirestore, useCollection } from 'vuefire';
 import { getStorage, ref as refStrg, uploadBytes } from "firebase/storage";
-
+import crearCurso from "./crearCurso.vue";
 
 import Ofimatica from '../components/Ofimatica.vue';
 import Programacion from '../components/Programacion.vue';
@@ -44,8 +44,8 @@ let username = ref("");
     <h1>Private Zone</h1>
     <h2>Hello {{ username }}</h2>
 
-   <Ofimatica></Ofimatica>
-   <Programacion></Programacion>
-   <SOs></SOs>
-    <p><input type="file" name="file" id="file" ref="file" @change="uploadFile"></p>
+    <crearCurso v-if="username === 'admin@admin.es'"></crearCurso>
+    <Ofimatica></Ofimatica>
+    <Programacion></Programacion>
+    <SOs></SOs>
 </template>
