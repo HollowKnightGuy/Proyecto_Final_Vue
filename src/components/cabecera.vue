@@ -34,7 +34,7 @@ function cerrarSesion(){
           <router-link to="/programacion">Programación</router-link> 
           <router-link to="/sos">SOs</router-link> 
           <router-link v-if="username == ''" to="/login">Iniciar sesion</router-link> 
-          <router-link v-if="username != ''" to="/private">Administracion</router-link> 
+          <router-link v-if="username === 'admin@admin.es'" to="/private">Administracion</router-link> 
           <button @click="cerrarSesion" v-if="username!=''" to="/">Cerrar sesion</button>
         </nav>
       </header>

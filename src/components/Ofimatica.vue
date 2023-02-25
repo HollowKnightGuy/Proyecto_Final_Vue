@@ -32,7 +32,7 @@
             <th>Horas</th>
             <th>imagen</th>
             <!-- CADA VEZ QUE HAGAMOS ESTE IF, COMPRUEBA SI SOMOS ADMIN -->
-            <th v-if="username ==='admin@admin.es'">Inscipción</th> 
+            <th v-if="username !=''">Inscipción</th> 
             <th v-if="username ==='admin@admin.es'">Administrar</th> 
         </tr>
         <!-- RECORREMOS EL ARRAY DE CURSOS Y COMPROBAMOS QUE NOS SAQUE SOLO LOS CURSOS DE ESTA CATEGORIA -->
@@ -42,8 +42,8 @@
                     <RouterLink v-bind:to="'/detallar/' + curso.id">{{ curso.nombre }}</RouterLink>
                 </td>
                 <td>{{ curso.horas }}</td>
-                <td><img v-bind:src="'/src/images/' + curso.imagen" width="50" height="50"></td>
-                <td v-if="username  ===   'admin@admin.es'"><button>Incribirse</button></td>
+                <td><img v-bind:src="'../images/' + curso.imagen" width="50" height="50"></td>
+                <td v-if="username  !=   ''"><button>Incribirse</button></td>
                 <td v-if="username  ===   'admin@admin.es'"><button @click='borrarCurso(curso.id)'>Eliminar</button></td>
             </tr>
         </tbody>

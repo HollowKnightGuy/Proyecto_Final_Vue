@@ -35,7 +35,7 @@
             <th>Horas</th>
             <th>imagen</th>
             <!-- CADA VEZ QUE HAGAMOS ESTE IF, COMPRUEBA SI SOMOS ADMIN -->
-            <th v-if="username ==='admin@admin.es'">Inscipción</th> 
+            <th v-if="username !=''">Inscipción</th> 
             <th v-if="username ==='admin@admin.es'">Administrar</th> 
         </tr>
         <tbody v-for="curso in cursos" :key="curso.nombre">
@@ -45,7 +45,7 @@
                 </td>
                 <td>{{ curso.horas }}</td>
                 <td><img v-bind:src="'/src/images/'+curso.imagen" width="50" height="50"></td>
-                <td v-if="username ==='admin@admin.es'"><button>Incribirse</button></td>
+                <td v-if="username !=''"><button>Incribirse</button></td>
                 <td v-if="username ==='admin@admin.es'"><button @click='borrarCurso(curso.id)'>Eliminar</button></td>
             </tr>
         </tbody>
