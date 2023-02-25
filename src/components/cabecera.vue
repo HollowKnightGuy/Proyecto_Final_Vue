@@ -3,6 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
 import { signOut } from "firebase/auth";
 import { ref } from 'vue';
+import { router } from '../main.js' 
 
 let username=ref("");
 
@@ -17,7 +18,7 @@ if (user) {
 function cerrarSesion(){
     signOut(auth).then(() => {
         username='';
-        location.reload();
+        router.push('/');
     }).catch((error) => {
     // An error happened.
     });

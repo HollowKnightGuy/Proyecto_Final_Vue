@@ -7,6 +7,7 @@ import Ofimatica from "@/components/Ofimatica.vue";
 import SOs from "@/components/SOs.vue";
 import Login from "@/components/Login.vue";
 import Private from "@/components/Private.vue";
+import detallesCursos from "@/components/detallesCursos.vue";
 
 import { createRouter, createWebHistory } from 'vue-router';
 import { onAuthStateChanged } from "firebase/auth";
@@ -38,6 +39,10 @@ const routes = [
     component: Login
 },
 {
+    path:'/detallar/:id',
+    component: detallesCursos
+},
+{
     path: '/private',
     component:Private,
     beforeEnter: (to, from) => {
@@ -47,7 +52,7 @@ const routes = [
 }
 ];
 
-const router = createRouter({
+export const router = createRouter({
     history: createWebHistory(),
     routes
 });
