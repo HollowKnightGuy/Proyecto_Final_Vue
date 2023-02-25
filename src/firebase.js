@@ -1,10 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
-import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
 
-
+// INICIALIZAMOS LA APLICACION CON LOS DATOS DE LA BASE DE DATOS
 export const firebaseApp = initializeApp({
     apiKey: "AIzaSyCybTZdzntYfeA0ddk0K-O1MmRK8WqGNU8",
     authDomain: "vue-project-9c8bf.firebaseapp.com",

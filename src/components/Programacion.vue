@@ -1,29 +1,27 @@
 <script setup>
-import { useFirestore,useCollection } from 'vuefire'
-import { collection, doc, deleteDoc } from "firebase/firestore";
+    import { useCollection } from 'vuefire';
+    import { collection, doc, deleteDoc } from "firebase/firestore";
 
+    import { onAuthStateChanged} from "firebase/auth";
+    import {ref} from "vue";
+    import {auth, db} from "../firebase.js";
 
-import { onAuthStateChanged} from "firebase/auth";
-import {ref} from "vue";
-import {auth} from "../firebase.js"
+    let username=ref("");
 
-let username=ref("");
+    const cursos = useCollection(collection(db, 'cursos'));
 
-const db = useFirestore()
-const cursos = useCollection(collection(db, 'cursos'))
+    // FUNCION QUE DETECTA EL CAMBIO DE SESION DE USUARIO
+    onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const uid = user.uid;
+        username.value=user.email;
+    }
+    });
 
-
-onAuthStateChanged(auth, (user) => {
-if (user) {
-    const uid = user.uid;
-    username.value=user.email;
-}
-});
-
-
-function borrarCurso(id){
-    deleteDoc(doc(db, 'cursos', id));
-}
+    // BORRA UN CURSO A PARTIR DE UN ID DE UN CURSO
+    function borrarCurso(id){
+        deleteDoc(doc(db, 'cursos', id));
+    }
 
 </script>
 
@@ -36,9 +34,11 @@ function borrarCurso(id){
             <th>Nombre</th>
             <th>Horas</th>
             <th>imagen</th>
+            <!-- CADA VEZ QUE HAGAMOS ESTE IF, COMPRUEBA SI SOMOS ADMIN -->
             <th v-if="username ===   'admin@admin.es'">Inscipción</th> 
             <th v-if="username ===   'admin@admin.es'">Inscipción</th> 
         </tr>
+        <!-- RECORREMOS EL ARRAY DE CURSOS Y COMPROBAMOS QUE NOS SAQUE SOLO LOS CURSOS DE ESTA CATEGORIA -->
         <tbody v-for="curso in cursos" :key="curso.nombre">
             <tr v-if="curso.categoria == 'programacion'">
                 <td>

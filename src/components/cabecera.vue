@@ -6,6 +6,7 @@ import { ref } from 'vue';
 
 let username=ref("");
 
+// FUNCION QUE DETECTA EL CAMBIO DE SESION DE USUARIO
 onAuthStateChanged(auth, (user) => {
 if (user) {
     const uid = user.uid;

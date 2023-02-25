@@ -1,41 +1,23 @@
 <script setup>
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/firebase";
-import { ref } from "vue";
-import { collection} from "firebase/firestore";
-import { useFirestore, useCollection } from 'vuefire';
-import { getStorage, ref as refStrg, uploadBytes } from "firebase/storage";
-import crearCurso from "./crearCurso.vue";
+    import { onAuthStateChanged } from "firebase/auth";
+    import { auth } from "../firebase.js";
+    import { ref } from "vue";
+    import crearCurso from "./crearCurso.vue";
+    import Ofimatica from '../components/Ofimatica.vue';
+    import Programacion from '../components/Programacion.vue';
+    import SOs from '../components/SOs.vue';
 
-import Ofimatica from '../components/Ofimatica.vue';
-import Programacion from '../components/Programacion.vue';
-import SOs from '../components/SOs.vue';
+    let username = ref("");
 
-
-const db = useFirestore()
-const cursos = useCollection(collection(db, 'cursos'));
-let username = ref("");
-
+    // FUNCION QUE DETECTA EL CAMBIO DE SESION DE USUARIO
     onAuthStateChanged(auth, (user) => {
         if (user) {
         // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
         // authenticated = true;
         username.value = user.email;
         } 
     });
-
-
-    let file = ref ("");
-    
-    function uploadFile(){
-        const storage = getStorage();
-        const storageRef = refStrg(storage, file.value.files[0].name);
-        uploadBytes(storageRef, file.value.files[0]).then((snapshot) => {
-            console.log('Uploaded a blob file');
-        });
-    }
 
 </script>
 
@@ -44,6 +26,8 @@ let username = ref("");
     <h1>Private Zone</h1>
     <h2>Hello {{ username }}</h2>
 
+
+    <!-- METEMOS TODAS LAS VISTAS DE CADA CATEGORIA -->
     <crearCurso v-if="username === 'admin@admin.es'"></crearCurso>
     <Ofimatica></Ofimatica>
     <Programacion></Programacion>

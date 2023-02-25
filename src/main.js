@@ -17,6 +17,8 @@ import './assets/main.css';
 
 let authenticated = false;
 
+
+// DECLARAMOS LAS RUTAS DE NUESTRA APLICACION
 const routes = [
 {
     path: '/', 
@@ -45,6 +47,7 @@ const routes = [
 {
     path: '/private',
     component:Private,
+    // COMPROBAMOS ANTES DE ENTRAR SI ESTAMOS AUTENTICADOS
     beforeEnter: (to, from) => {
         // reject the navigation
         return authenticated;
@@ -52,15 +55,17 @@ const routes = [
 }
 ];
 
+// NOS CREAMOS EL ROUTER PARA REDIRECCIONAR
 export const router = createRouter({
     history: createWebHistory(),
     routes
 });
 
+
+// FUNCION QUE DETECTA EL CAMBIO DE SESION DE USUARIO
 onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
       authenticated = true;
     } else {
@@ -69,6 +74,7 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
+// INICIALIZAMOS NUESTRA APLICACION
 var app = createApp(App);
 app.use(router);
 app.mount('#app');

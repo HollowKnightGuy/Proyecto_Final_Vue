@@ -1,9 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { router } from "../main.js";
@@ -12,7 +9,7 @@ let username = ref(""),
 password = ref("");
 const provider = new GoogleAuthProvider();
 
-
+// LLEVA A CABO EL PROCESO DEL REGISTRO
 function registration() {
   createUserWithEmailAndPassword(auth, username.value, password.value)
     .then((userCredential) => {
@@ -27,6 +24,8 @@ function registration() {
     });
 }
 
+
+// LLEVA A CABO EL PROCESO DEL LOGIN
 function login() {
   signInWithEmailAndPassword(auth, username.value, password.value)
     .then((userCredential) => {
@@ -41,6 +40,8 @@ function login() {
     });
 }
 
+
+// LLEVA A CABO EL PROCESO DEL LOGIN CON GOOGLE
 function loginGoogle() {
   signInWithPopup(auth, provider)
     .then((result) => {
@@ -49,8 +50,6 @@ function loginGoogle() {
       const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
-      // IdP data available using getAdditionalUserInfo(result)
-      // ...
       router.push("/private");
     })
     .catch((error) => {
@@ -61,7 +60,6 @@ function loginGoogle() {
       const email = error.customData.email;
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
     });
 }
 </script>
